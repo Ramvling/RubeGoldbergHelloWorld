@@ -1,6 +1,5 @@
 require "rubygems"
 require "google_drive"
-numberFound = false
 
 image = File.new("hello.png", "r")
 bytes = Array.new
@@ -47,40 +46,21 @@ end
 #generate new .png file to store contact number
 output = ""
 i = 0
-j = 0
+j = 40
 k = 0
 png = File.new("number.png", "w")
 	for byte in bytes
-		case byte
-		when 10
-			byte = "a"
-		when 11
-			byte = "b"
-		when 12
-			byte = "c"
-		when 13
-			byte = "d"
-		when 14
-			byte = "e"
-		when 15
-			byte = "f"
-		else
-			byte = byte.to_s
-		end
-
 		if i == j
 			output = output + number[k]
-			j = j + 40
 			k = k + 1
+			j = j + 40
 		else 
-			output = output + byte
+			output = output + number[k]
 		end
-
-		if ((i % 32 == 0) && (i != 0))
-			png.puts output
-			output = ""
+		if k > 9
+			k = 9
 		end
 		i = i + 1
 	end
-
-numberFound = true
+	png.puts output
+	png.close
